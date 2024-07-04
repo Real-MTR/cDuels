@@ -1,0 +1,4 @@
+name: cDuels
+version: '${project.version}'
+main: xyz.atomdev.cduels.CDuels
+author: Crystal Development Team
