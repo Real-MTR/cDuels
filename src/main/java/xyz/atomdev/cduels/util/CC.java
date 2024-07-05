@@ -19,14 +19,16 @@ public class CC {
         return ChatColor.translateAlternateColorCodes('&', str);
     }
 
-    public String[] colorize(String[] str) {
-        List<String> list = new ArrayList<>();
+    public List<String> colorize(List<String> list) {
+        list.forEach(CC::colorize);
+        return list;
+    }
 
-        for (String string : str) {
-            list.add(colorize(string));
+    public String[] colorize(String[] array) {
+        for (int i = 0; i < array.length; i++) {
+            array[i] = colorize(array[i]);
         }
-
-        return (String[]) list.toArray();
+        return array;
     }
 
     public void sendMessage(CommandSender sender, String str) {
