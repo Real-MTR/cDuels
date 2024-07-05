@@ -31,13 +31,13 @@ public class KitCommands extends BaseCommand {
                 "&8--------------------------------",
                 "&b&lKit Manager Help",
                 "&8--------------------------------",
-                "&7* &e/xekits create <name>",
-                "&7* &e/xekits delete <name>",
-                "&7* &e/xekits setitems <name>",
-                "&7* &e/xekits addeffect <name> <effect> <amplifier>",
-                "&7* &e/xekits removeeffect <name> <effect>",
-                "&7* &e/xekits showeffects <name>",
-                "&7* &e/xekits list",
+                "&7* &e/duelkit create <name>",
+                "&7* &e/duelkit delete <name>",
+                "&7* &e/duelkit setitems <name>",
+                "&7* &e/duelkit addeffect <name> <effect> <amplifier>",
+                "&7* &e/duelkit removeeffect <name> <effect>",
+                "&7* &e/duelkit showeffects <name>",
+                "&7* &e/duelkit list",
                 "&8--------------------------------"
         });
     }

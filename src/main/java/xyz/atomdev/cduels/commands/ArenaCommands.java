@@ -32,9 +32,6 @@ public class ArenaCommands extends BaseCommand {
                 "&7* &e/arena create <name>",
                 "&7* &e/arena delete <name>",
                 "&7* &e/arena setpos1 / setpos2 <name>",
-                "&7* &e/arena addkit <name> <kit>",
-                "&7* &e/arena removekit <name> <kit>",
-                "&7* &e/arena allowedkits <name>",
                 "&7* &e/arena list",
                 "&8--------------------------------"
         });
