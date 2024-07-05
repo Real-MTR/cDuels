@@ -2,11 +2,13 @@ package xyz.atomdev.cduels.handler;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.bukkit.inventory.ItemStack;
 import xyz.atomdev.cduels.CDuels;
 import xyz.atomdev.cduels.model.kit.Kit;
 import xyz.atomdev.cduels.util.ConfigFile;
 import xyz.atomdev.cduels.util.SerializationUtil;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -51,11 +53,11 @@ public class KitHandler {
         return kits.values().stream().filter(kit -> kit.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
-    public void createKit(String name) {
+    public Kit createKit(String name) {
         Kit kit = new Kit(name);
-        saveKit(kit);
-
         kits.put(name, kit);
+
+        return kit;
     }
 
     public void saveKit(Kit kit) {
@@ -67,9 +69,12 @@ public class KitHandler {
         }
 
         kitFile.set("arenas." + kit.getName() + ".name", kit.getName());
-        kitFile.set("arenas." + kit.getName() + ".effects", SerializationUtil.serializeEffects(kit.getEffects()));
-        kitFile.set("arenas." + kit.getName() + ".items", SerializationUtil.serializeItems(kit.getInventoryContents()));
-        kitFile.set("arenas." + kit.getName() + ".armor", SerializationUtil.serializeItems(kit.getArmorContents()));
+        kitFile.set("arenas." + kit.getName() + ".effects", kit.getEffects().isEmpty() ? new ArrayList<>() :
+                SerializationUtil.serializeEffects(kit.getEffects()));
+        kitFile.set("arenas." + kit.getName() + ".items", kit.getInventoryContents().length == 0 ? new ItemStack[]{} :
+                SerializationUtil.serializeItems(kit.getInventoryContents()));
+        kitFile.set("arenas." + kit.getName() + ".armor", kit.getArmorContents().length == 0 ? new ItemStack[]{} :
+                SerializationUtil.serializeItems(kit.getArmorContents()));
 
         kitFile.save();
     }

@@ -28,8 +28,6 @@ public class KitsMenu extends Menu {
 
     private final CDuels instance;
     private final Player target;
-    private final boolean isWager;
-    private final double wager;
 
     @Override
     public String getTitle(Player player) {
@@ -42,7 +40,7 @@ public class KitsMenu extends Menu {
 
         int i = 0;
         for (Kit kit : instance.getKitHandler().getKits().values()) {
-            buttons.put(i, new KitsButton(kit, target, isWager, wager));
+            buttons.put(i, new KitsButton(kit, target));
             i++;
         }
 
@@ -54,8 +52,6 @@ public class KitsMenu extends Menu {
 
         private final Kit kit;
         private final Player target;
-        private final boolean isWager;
-        private final double wager;
 
         @Override
         public ItemStack getItem(Player player) {
@@ -72,11 +68,11 @@ public class KitsMenu extends Menu {
 
         @Override
         public void onClick(Player player, int slot, ClickType type) {
-            DuelRequest request = new DuelRequest(player, target, kit, isWager ? wager : 0);
+            DuelRequest request = new DuelRequest(player, target, kit);
             player.closeInventory();
 
-            CC.sendMessage(player, isWager ? "&aYou have sent a wager of &e$" + wager + " &ato &b" + target.getName() + " &awith the kit &e" + kit.getName() : "&aYou have sent a duel to &b" + target.getName() + " &awith the kit &e" + kit.getName());
-            CC.sendMessage(target, isWager ? "&b" + player.getName() + " &asent you a wager of &e$" + wager + " &awith the kit &e" + kit.getName() : "&b" + player.getName() + " &asent you a duel with the kit &e" + kit.getName());
+            CC.sendMessage(player, "&aYou have sent a duel to &b" + target.getName() + " &awith the kit &e" + kit.getName());
+            CC.sendMessage(target, "&b" + player.getName() + " &asent you a duel with the kit &e" + kit.getName());
             new MessageBuilder("&2&lAccept")
                     .translate(true)
                     .clickable(true)

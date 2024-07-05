@@ -30,15 +30,13 @@ public class DuelRequest {
     private Kit kit;
 
     private long dateTime;
-    private double bet;
     private boolean expired;
 
-    public DuelRequest(Player requester, Player target, Kit kit, double bet) {
+    public DuelRequest(Player requester, Player target, Kit kit) {
         this.requester = requester;
         this.target = target;
         this.kit = kit;
         this.dateTime = System.currentTimeMillis();
-        this.bet = bet;
         this.expired = false;
 
         requests.put(requester.getUniqueId(), this);

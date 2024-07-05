@@ -23,7 +23,7 @@ public class DuelCommands extends BaseCommand {
     private final CDuels instance;
 
     @CommandAlias("duel")
-    public void onDuelCommand(Player sender, @Name("player") Player target, @Name("wager") @Optional Double wager) {
+    public void onDuelCommand(Player sender, @Name("player") Player target) {
         if (target == null || !target.isOnline()) {
             CC.sendMessage(sender, "&cThat player was not found!");
             return;
@@ -41,7 +41,7 @@ public class DuelCommands extends BaseCommand {
             return;
         }
 
-        new KitsMenu(instance, target, wager != null, wager == null ? -1 : wager);
+        new KitsMenu(instance, target);
     }
 
     @CommandAlias("duelaccept")
@@ -56,14 +56,7 @@ public class DuelCommands extends BaseCommand {
         CC.sendMessage(sender, "&aYou have accepted &b" + target.getName() + "'s &aduel request with the kit " + request.getKit().getName());
         CC.sendMessage(target, "&b" + sender.getName() + " &aaccepted the duel request with the kit " + request.getKit().getName());
 
-        Duel duel;
-
-        if(request.getBet() == 0) {
-            duel = new Duel(target.getName(), sender.getName(), request.getKit());
-        } else {
-            duel = new Duel(target.getName(), sender.getName(), request.getKit(), request.getBet());
-        }
-
+        Duel duel = new Duel(target.getName(), sender.getName(), request.getKit());
         instance.getDuelHandler().start(duel);
     }
 }

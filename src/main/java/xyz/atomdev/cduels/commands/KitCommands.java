@@ -51,7 +51,12 @@ public class KitCommands extends BaseCommand {
             return;
         }
 
-        instance.getKitHandler().createKit(name);
+        Kit newKit = instance.getKitHandler().createKit(name);
+
+        newKit.setArmorContents(player.getInventory().getContents());
+        newKit.setInventoryContents(player.getInventory().getArmorContents());
+
+        instance.getKitHandler().saveKit(newKit);
         CC.sendMessage(player, "&aCreated kit &e" + name);
     }
 
@@ -79,6 +84,7 @@ public class KitCommands extends BaseCommand {
 
         kit.setInventoryContents(player.getInventory().getContents());
         kit.setArmorContents(player.getInventory().getArmorContents());
+
         instance.getKitHandler().saveKit(kit);
         CC.sendMessage(player, "&aSet items to kit &e" + name);
     }
@@ -110,6 +116,7 @@ public class KitCommands extends BaseCommand {
 
         kit.getEffects().add(new PotionEffect(effectType, Integer.MAX_VALUE, amplifier, false, false));
         instance.getKitHandler().saveKit(kit);
+
         CC.sendMessage(player, "&aAdded potion to kit &e" + name);
     }
 
