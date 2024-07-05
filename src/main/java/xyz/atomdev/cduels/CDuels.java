@@ -1,12 +1,18 @@
 package xyz.atomdev.cduels;
 
+import co.aikar.commands.BukkitCommandManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import lombok.Getter;
+import xyz.atomdev.cduels.commands.ArenaCommands;
+import xyz.atomdev.cduels.commands.DuelCommands;
+import xyz.atomdev.cduels.commands.KitCommands;
+import xyz.atomdev.cduels.commands.SetEndLocationCommand;
 import xyz.atomdev.cduels.database.SQLDatabase;
 import xyz.atomdev.cduels.handler.ArenaHandler;
 import xyz.atomdev.cduels.handler.DuelHandler;
 import xyz.atomdev.cduels.handler.KitHandler;
 import xyz.atomdev.cduels.handler.ProfileHandler;
+import xyz.atomdev.cduels.listeners.DuelListener;
 import xyz.atomdev.cduels.listeners.ProfileListener;
 import xyz.atomdev.cduels.util.ConfigFile;
 
@@ -38,6 +44,7 @@ public final class CDuels extends JavaPlugin {
         saveDefaultConfig();
         loadObjects();
         registerListeners();
+        registerCommands();
     }
 
     @Override
@@ -56,5 +63,15 @@ public final class CDuels extends JavaPlugin {
 
     private void registerListeners() {
         new ProfileListener(this);
+        new DuelListener(this);
+    }
+
+    private void registerCommands() {
+        BukkitCommandManager commandManager = new BukkitCommandManager(this);
+
+        commandManager.registerCommand(new ArenaCommands(this));
+        commandManager.registerCommand(new DuelCommands(this));
+        commandManager.registerCommand(new KitCommands(this));
+        commandManager.registerCommand(new SetEndLocationCommand(this));
     }
 }
