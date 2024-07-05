@@ -60,7 +60,7 @@ public class Duel {
     }
 
     public Profile getOpponent(Profile player) {
-        return getFirstPlayer().getUuid().toString().equals(player.getUuid().toString()) ? getSecondPlayer() : getFirstPlayer();
+        return getFirstPlayer().getName().equals(player.getName()) ? getSecondPlayer() : getFirstPlayer();
     }
 
     // TODO: Remove the players from the game & remove their map traces
