@@ -23,7 +23,7 @@ public class DuelCommands extends BaseCommand {
     private final CDuels instance;
 
     @CommandAlias("duel")
-    public void onDuelCommand(Player sender, Player target, @Name("wager") @Optional Double wager) {
+    public void onDuelCommand(Player sender, @Name("player") Player target, @Name("wager") @Optional Double wager) {
         if (target == null || !target.isOnline()) {
             CC.sendMessage(sender, "&cThat player was not found!");
             return;
