@@ -12,7 +12,6 @@ import org.bukkit.Location;
  */
 
 // I know I can use @Data
-@RequiredArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
@@ -22,11 +21,10 @@ public class Arena {
     private String name;
 
     private Location pos1, pos2;
-    private boolean occupied;
+    private boolean occupied = false;
 
-    public Arena(String id, String name, boolean occupied) {
+    public Arena(String id, String name) {
         this.id = id;
         this.name = name;
-        this.occupied = occupied;
     }
 }

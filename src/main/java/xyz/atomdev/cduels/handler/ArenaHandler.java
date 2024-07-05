@@ -53,7 +53,7 @@ public class ArenaHandler {
 
     public void createArena(String name) {
         if (getArenaByName(name) != null) return;
-        Arena arena = new Arena(name);
+        Arena arena = new Arena(name.toLowerCase(), name);
 
         saveArena(arena);
     }
