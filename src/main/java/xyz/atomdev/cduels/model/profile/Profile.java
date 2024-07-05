@@ -8,6 +8,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
+import xyz.atomdev.cduels.CDuels;
 import xyz.atomdev.cduels.model.duel.Duel;
 
 import java.util.ArrayList;
@@ -43,9 +44,8 @@ public class Profile {
         this.lastEffects = lastEffects;
     }
 
-    // TODO: Easier to access the player's current duel
     public Duel getCurrentDuel() {
-        return null;
+        return CDuels.getInstance().getDuelHandler().getDuelById(currentDuelId);
     }
 
     public boolean isInDuel() {

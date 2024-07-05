@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DuelHandler {
 
     private final CDuels instance;
-    private final Map<UUID, Duel> duels = new ConcurrentHashMap<>();
+    private final Map<String, Duel> duels = new ConcurrentHashMap<>();
 
     public void start(Duel duel) {
         Player firstPlayer = duel.getFirstPlayer().toBukkitPlayer();

@@ -5,6 +5,7 @@ import lombok.Getter;
 import xyz.atomdev.cduels.database.SQLDatabase;
 import xyz.atomdev.cduels.handler.ArenaHandler;
 import xyz.atomdev.cduels.handler.DuelHandler;
+import xyz.atomdev.cduels.handler.KitHandler;
 import xyz.atomdev.cduels.handler.ProfileHandler;
 import xyz.atomdev.cduels.listeners.ProfileListener;
 import xyz.atomdev.cduels.util.ConfigFile;
@@ -20,6 +21,7 @@ public final class CDuels extends JavaPlugin {
     private ProfileHandler profileHandler;
     private DuelHandler duelHandler;
     private ArenaHandler arenaHandler;
+    private KitHandler kitHandler;
 
     @Override
     public void onLoad() {
@@ -49,6 +51,7 @@ public final class CDuels extends JavaPlugin {
         this.profileHandler = new ProfileHandler(this);
         this.duelHandler = new DuelHandler(this);
         this.arenaHandler = new ArenaHandler(this);
+        this.kitHandler = new KitHandler(this);
     }
 
     private void registerListeners() {

@@ -50,7 +50,6 @@ public class Duel {
         return wager != 0;
     }
 
-    // TODO: Retrieve the duel players...
     public Profile getFirstPlayer() {
         return CDuels.getInstance().getProfileHandler().getProfileMap().get(player1);
     }
@@ -63,7 +62,8 @@ public class Duel {
         return player1.equals(player.getName()) ? getSecondPlayer() : getFirstPlayer();
     }
 
-    // TODO: Remove the players from the game & remove their map traces
     public void end() {
+        CDuels.getInstance().getDuelHandler().getDuels().remove(player1);
+        CDuels.getInstance().getDuelHandler().getDuels().remove(player2);
     }
 }
