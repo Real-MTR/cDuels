@@ -90,7 +90,7 @@ public class ArenaCommands extends BaseCommand {
         arena.setPos2(player.getLocation());
         instance.getArenaHandler().saveArena(arena);
 
-        CC.sendMessage(player, "&aSet pos1 arena &e" + name);
+        CC.sendMessage(player, "&aSet pos2 arena &e" + name);
     }
 
     @Subcommand("list")
