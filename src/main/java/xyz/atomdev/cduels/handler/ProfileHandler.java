@@ -110,7 +110,7 @@ public class ProfileHandler {
                 "losses INT NOT NULL," +
                 "gamesPlayed INT NOT NULL," +
                 "lastItems VARCHAR(255) NOT NULL," +
-                "lastArmor VARCHAR(255) NOT NULL" +
+                "lastArmor VARCHAR(255) NOT NULL," +
                 "lastEffects VARCHAR(255) NOT NULL" +
                 ")";
 
