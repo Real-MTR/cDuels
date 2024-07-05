@@ -3,6 +3,7 @@ package xyz.atomdev.cduels;
 import org.bukkit.plugin.java.JavaPlugin;
 import lombok.Getter;
 import xyz.atomdev.cduels.database.SQLDatabase;
+import xyz.atomdev.cduels.handler.ProfileHandler;
 
 @Getter
 public final class CDuels extends JavaPlugin {
@@ -10,6 +11,7 @@ public final class CDuels extends JavaPlugin {
     @Getter private static CDuels instance;
 
     private SQLDatabase database;
+    private ProfileHandler profileHandler;
 
     @Override
     public void onEnable() {
@@ -21,14 +23,12 @@ public final class CDuels extends JavaPlugin {
 
     @Override
     public void onDisable() {
-       instance = null;
+        profileHandler.save(false);
+        instance = null;
     }
 
     private void loadDatabase() {
-        try {
-            this.database = new SQLDatabase(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.database = new SQLDatabase(this);
+        this.profileHandler = new ProfileHandler(this);
     }
 }

@@ -12,6 +12,7 @@ import xyz.atomdev.cduels.model.duel.Duel;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -23,13 +24,23 @@ import java.util.UUID;
 @Getter @Setter
 public class Profile {
 
-    private final UUID uuid;
+    private final String name;
 
     private UUID currentDuelId = new UUID(0, 0);
     private ItemStack[] lastItems = new ItemStack[]{}, lastArmor = new ItemStack[]{};
     private Collection<PotionEffect> lastEffects = new ArrayList<>();
 
-    private int wins = 0, losses = 0, winStreak = 0;
+    private int wins = 0, losses = 0, gamesPlayed = 0;
+
+    public Profile(String name, int wins, int losses, int gamesPlayed, ItemStack[] lastItems, ItemStack[] lastArmor, List<PotionEffect> lastEffects) {
+        this.name = name;
+        this.wins = wins;
+        this.losses = losses;
+        this.gamesPlayed = gamesPlayed;
+        this.lastItems = lastItems;
+        this.lastArmor = lastArmor;
+        this.lastEffects = lastEffects;
+    }
 
     // TODO: Easier to access the player's current duel
     public Duel getCurrentDuel() {
@@ -45,14 +56,23 @@ public class Profile {
     }
 
     public Player toBukkitPlayer() {
-        return Bukkit.getPlayer(uuid);
+        return Bukkit.getPlayer(name);
     }
 
     public OfflinePlayer toBukkitOfflinePlayer() {
-        return Bukkit.getOfflinePlayer(uuid);
+        return Bukkit.getOfflinePlayer(name);
     }
 
     public boolean isOnline() {
         return toBukkitPlayer() != null && toBukkitPlayer().isOnline();
+    }
+
+    // Just to check
+    @Override
+    public String toString() {
+        return getName() + ";"
+                + getWins() + ";"
+                + getLosses() + ";"
+                + getGamesPlayed() + ";";
     }
 }
