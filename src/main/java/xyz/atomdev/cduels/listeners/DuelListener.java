@@ -2,9 +2,7 @@ package xyz.atomdev.cduels.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.EnderPearl;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -47,24 +45,9 @@ public class DuelListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onProjectileLaunch(ProjectileLaunchEvent event) {
-        if(event.getEntity().getShooter() instanceof Player) {
-            Profile duelPlayer = plugin.getProfileHandler().getProfileMap().get(((Player) event.getEntity().getShooter()).getName());
-            if(!duelPlayer.isInDuel() || duelPlayer.getCurrentDuel().getState() != DuelState.FIGHTING) return;
-
-            if (event.getEntity() instanceof EnderPearl) {
-                EnderPearl enderPearl = (EnderPearl) event.getEntity();
-
-                if (enderPearl.getShooter() instanceof Player) {
-                    Player player = (Player) enderPearl.getShooter();
-                }
-            }
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
+        if(!(event.getDamager() instanceof Player) && !(event.getDamager() instanceof Arrow) && !(event.getDamager() instanceof FishHook)) return;
 
         Player damaged = (Player) event.getEntity();
         Player damager = getDamager(event);
