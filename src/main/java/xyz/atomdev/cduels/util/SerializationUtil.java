@@ -10,6 +10,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -37,8 +38,11 @@ public class SerializationUtil {
     }
 
     public ItemStack[] deserializeItems(String data) throws IOException {
+        if(data == null) return new ItemStack[]{};
+
         try (ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64.getDecoder().decode(data));
              BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream)) {
+            if(inputStream == null || dataInput == null) return new ItemStack[]{};
 
             ItemStack[] items = new ItemStack[dataInput.readInt()];
             for (int i = 0; i < items.length; i++) {
@@ -67,7 +71,11 @@ public class SerializationUtil {
     }
 
     public List<PotionEffect> deserializeEffects(String base64Data) {
-        byte[] serializedData = Base64.getDecoder().decode(base64Data);
-        return bytesToPotionEffects(serializedData);
+        try {
+            byte[] serializedData = Base64.getDecoder().decode(base64Data);
+            return bytesToPotionEffects(serializedData);
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 }

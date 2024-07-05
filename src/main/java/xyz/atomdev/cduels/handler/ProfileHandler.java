@@ -2,6 +2,7 @@ package xyz.atomdev.cduels.handler;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.bukkit.inventory.ItemStack;
 import xyz.atomdev.cduels.CDuels;
 import xyz.atomdev.cduels.model.profile.Profile;
 import xyz.atomdev.cduels.util.SerializationUtil;
@@ -51,9 +52,9 @@ public class ProfileHandler {
                         wins,
                         losses,
                         gamesPlayed,
-                        SerializationUtil.deserializeItems(items),
-                        SerializationUtil.deserializeItems(armor),
-                        SerializationUtil.deserializeEffects(effects));
+                        items.equals("_") ? new ItemStack[]{} : SerializationUtil.deserializeItems(items),
+                        armor.equals("_") ? new ItemStack[]{} : SerializationUtil.deserializeItems(armor),
+                        effects.equals("_") ? new ArrayList<>() : SerializationUtil.deserializeEffects(effects));
 
                 profileMap.put(name, profile);
             }
@@ -82,9 +83,9 @@ public class ProfileHandler {
             statement.setInt(3, profile.getLosses());
             statement.setInt(4, profile.getGamesPlayed());
 
-            statement.setString(5, SerializationUtil.serializeItems(profile.getLastItems()));
-            statement.setString(6, SerializationUtil.serializeItems(profile.getLastArmor()));
-            statement.setString(7, SerializationUtil.serializeEffects(new ArrayList<>(profile.getLastEffects())));
+            statement.setString(5, profile.getLastItems().length == 0 ? "_" : SerializationUtil.serializeItems(profile.getLastItems()));
+            statement.setString(6, profile.getLastArmor().length == 0 ? "_" : SerializationUtil.serializeItems(profile.getLastArmor()));
+            statement.setString(7, profile.getLastEffects().isEmpty() ? "_" : SerializationUtil.serializeEffects(new ArrayList<>(profile.getLastEffects())));
 
             statement.executeUpdate();
         } catch (SQLException e) {

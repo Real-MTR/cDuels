@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import lombok.Getter;
 import xyz.atomdev.cduels.database.SQLDatabase;
 import xyz.atomdev.cduels.handler.ProfileHandler;
+import xyz.atomdev.cduels.listeners.ProfileListener;
 
 @Getter
 public final class CDuels extends JavaPlugin {
@@ -19,6 +20,7 @@ public final class CDuels extends JavaPlugin {
 
         saveDefaultConfig();
         loadDatabase();
+        registerListeners();
     }
 
     @Override
@@ -30,5 +32,9 @@ public final class CDuels extends JavaPlugin {
     private void loadDatabase() {
         this.database = new SQLDatabase(this);
         this.profileHandler = new ProfileHandler(this);
+    }
+
+    private void registerListeners() {
+        new ProfileListener(this);
     }
 }

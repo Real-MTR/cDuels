@@ -1,0 +1,4 @@
+name: cDuels
+version: '1.0'
+main: xyz.atomdev.cduels.CDuels
+author: Crystal Development Team

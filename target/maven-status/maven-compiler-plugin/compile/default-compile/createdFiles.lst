@@ -1,0 +1,12 @@
+xyz\atomdev\cduels\model\arena\Arena.class
+xyz\atomdev\cduels\model\duel\state\DuelState.class
+xyz\atomdev\cduels\util\PotionEffectSerializer.class
+xyz\atomdev\cduels\model\duel\Duel.class
+xyz\atomdev\cduels\model\kit\Kit.class
+xyz\atomdev\cduels\model\profile\Profile.class
+xyz\atomdev\cduels\CDuels.class
+xyz\atomdev\cduels\database\SQLDatabase.class
+xyz\atomdev\cduels\util\SerializationUtil.class
+xyz\atomdev\cduels\util\CC.class
+xyz\atomdev\cduels\listeners\ProfileListener.class
+xyz\atomdev\cduels\handler\ProfileHandler.class

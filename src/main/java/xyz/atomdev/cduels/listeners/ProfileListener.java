@@ -33,18 +33,8 @@ public class ProfileListener implements Listener {
 
         if(profile == null) {
             profile = new Profile(player.getName());
+
             instance.getProfileHandler().getProfileMap().put(profile.getName(), profile);
         }
-    }
-
-    // Just to check if the database works fine
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        Profile profile = instance.getProfileHandler().getProfileMap().get(player.getName());
-
-        if(profile == null) return;
-
-        CC.sendMessage(player, profile.toString());
     }
 }
