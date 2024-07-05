@@ -35,11 +35,6 @@ public class Kit {
         this.allowedArenasId = new ArrayList<>();
     }
 
-    // TODO: Return all of the arenas assigned to the specific kit.
-    public List<Arena> getAllowedArenas() {
-        return new ArrayList<>();
-    }
-
     public void removeEffect(PotionEffectType effectType) {
         if(hasEffect(effectType)) effects.remove(effects.stream().filter(effect -> effect.getType() == effectType).findFirst().get());
     }

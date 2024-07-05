@@ -20,14 +20,14 @@ import java.util.UUID;
 public class Duel {
 
     private final UUID uuid;
-    private final UUID player1, player2;
+    private final String player1, player2;
     private Kit kit;
     private Arena arena;
     private DuelState state;
     private double wager = 0;
     private int duration;
 
-    public Duel(UUID player1, UUID player2, Kit kit) {
+    public Duel(String player1, String player2, Kit kit) {
         this.uuid = UUID.randomUUID();
         this.player1 = player1;
         this.player2 = player2;
@@ -36,7 +36,7 @@ public class Duel {
         this.duration = 0;
     }
 
-    public Duel(UUID player1, UUID player2, Kit kit, double wager) {
+    public Duel(String player1, String player2, Kit kit, double wager) {
         this.uuid = UUID.randomUUID();
         this.player1 = player1;
         this.player2 = player2;
@@ -52,15 +52,15 @@ public class Duel {
 
     // TODO: Retrieve the duel players...
     public Profile getFirstPlayer() {
-        return null;
+        return CDuels.getInstance().getProfileHandler().getProfileMap().get(player1);
     }
 
     public Profile getSecondPlayer() {
-        return null;
+        return CDuels.getInstance().getProfileHandler().getProfileMap().get(player2);
     }
 
     public Profile getOpponent(Profile player) {
-        return getFirstPlayer().getName().equals(player.getName()) ? getSecondPlayer() : getFirstPlayer();
+        return player1.equals(player.getName()) ? getSecondPlayer() : getFirstPlayer();
     }
 
     // TODO: Remove the players from the game & remove their map traces

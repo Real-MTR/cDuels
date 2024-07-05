@@ -31,6 +31,7 @@ public class Profile {
     private Collection<PotionEffect> lastEffects = new ArrayList<>();
 
     private int wins = 0, losses = 0, gamesPlayed = 0;
+    private boolean inDuel = false;
 
     public Profile(String name, int wins, int losses, int gamesPlayed, ItemStack[] lastItems, ItemStack[] lastArmor, List<PotionEffect> lastEffects) {
         this.name = name;
