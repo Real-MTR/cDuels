@@ -3,6 +3,7 @@ package xyz.atomdev.cduels.handler;
 import lombok.Getter;
 import xyz.atomdev.cduels.CDuels;
 import xyz.atomdev.cduels.model.arena.Arena;
+import xyz.atomdev.cduels.util.SerializationUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,7 +29,11 @@ public class ArenaHandler {
     private void loadArenas() {
         if (plugin.getArenaFile().getConfiguration().contains("arenas") && plugin.getArenaFile().getConfiguration().getConfigurationSection("arenas") != null) {
             for (String arenaId : plugin.getArenaFile().getConfiguration().getConfigurationSection("arenas").getKeys(false)) {
-                Arena arena = (Arena) plugin.getArenaFile().getConfiguration().get("arenas." + arenaId, Arena.class);
+                Arena arena = new Arena(arenaId,
+                        plugin.getArenaFile().getString("arenas." + arenaId + ".name"),
+                        SerializationUtil.deserializeLocation(plugin.getArenaFile().getString("arenas." + arenaId + ".pos1")),
+                        SerializationUtil.deserializeLocation(plugin.getArenaFile().getString("arenas." + arenaId + ".pos2")),
+                        plugin.getArenaFile().getBoolean("arenas." + arenaId + ".occupied"));
 
                 arenas.put(arenaId, arena);
             }
@@ -61,7 +66,11 @@ public class ArenaHandler {
     public void saveArena(Arena arena) {
         arenas.putIfAbsent(arena.getId().toLowerCase(), arena);
 
-        plugin.getArenaFile().set("arenas." + arena.getId().toLowerCase(), arena);
+        plugin.getArenaFile().set("arenas." + arena.getId() + ".name", arena.getName());
+        plugin.getArenaFile().set("arenas." + arena.getId() + ".occupied", arena.isOccupied());
+        plugin.getArenaFile().set("arenas." + arena.getId() + ".pos1", SerializationUtil.serializeLocation(arena.getPos1()));
+        plugin.getArenaFile().set("arenas." + arena.getId() + ".pos2", SerializationUtil.serializeLocation(arena.getPos2()));
+
         plugin.getArenaFile().save();
     }
 

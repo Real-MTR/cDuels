@@ -1,9 +1,11 @@
 package xyz.atomdev.cduels.handler;
 
 import lombok.Getter;
+import lombok.SneakyThrows;
 import xyz.atomdev.cduels.CDuels;
 import xyz.atomdev.cduels.model.kit.Kit;
 import xyz.atomdev.cduels.util.ConfigFile;
+import xyz.atomdev.cduels.util.SerializationUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,6 +28,7 @@ public class KitHandler {
         loadKits();
     }
 
+    @SneakyThrows
     private void loadKits() {
         ConfigFile kitFile = plugin.getKitFile();
 
@@ -37,7 +40,10 @@ public class KitHandler {
         kits.clear();
 
         for (String key : kitFile.getConfiguration().getKeys(false)) {
-            kits.put(key, (Kit) kitFile.getConfiguration().get(key, Kit.class));
+            kits.put(key, new Kit(key,
+                    SerializationUtil.deserializeItems(kitFile.getString(key + ".items")),
+                    SerializationUtil.deserializeItems(kitFile.getString(key + ".armor")),
+                    SerializationUtil.deserializeEffects(kitFile.getString(key + ".effects"))));
         }
     }
 
@@ -45,12 +51,11 @@ public class KitHandler {
         return kits.values().stream().filter(kit -> kit.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
-    public Kit createKit(String name) {
+    public void createKit(String name) {
         Kit kit = new Kit(name);
         saveKit(kit);
 
         kits.put(name, kit);
-        return kit;
     }
 
     public void saveKit(Kit kit) {
@@ -61,7 +66,11 @@ public class KitHandler {
             return;
         }
 
-        kitFile.getConfiguration().set(kit.getName(), kit);
+        kitFile.set("arenas." + kit.getName() + ".name", kit.getName());
+        kitFile.set("arenas." + kit.getName() + ".effects", SerializationUtil.serializeEffects(kit.getEffects()));
+        kitFile.set("arenas." + kit.getName() + ".items", SerializationUtil.serializeItems(kit.getInventoryContents()));
+        kitFile.set("arenas." + kit.getName() + ".armor", SerializationUtil.serializeItems(kit.getArmorContents()));
+
         kitFile.save();
     }
 
