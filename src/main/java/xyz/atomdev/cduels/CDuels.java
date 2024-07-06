@@ -1,6 +1,7 @@
 package xyz.atomdev.cduels;
 
-import co.aikar.commands.BukkitCommandManager;
+import me.andyreckt.raspberry.Raspberry;
+import me.andyreckt.raspberry.RaspberryPaper;
 import org.bukkit.plugin.java.JavaPlugin;
 import lombok.Getter;
 import xyz.atomdev.cduels.commands.ArenaCommands;
@@ -69,11 +70,12 @@ public final class CDuels extends JavaPlugin {
     }
 
     private void registerCommands() {
-        BukkitCommandManager commandManager = new BukkitCommandManager(this);
+        Raspberry commandManager = new RaspberryPaper(this);
+        commandManager.registerCommandOfPlugin(this);
 
-        commandManager.registerCommand(new ArenaCommands(this));
-        commandManager.registerCommand(new DuelCommands(this));
-        commandManager.registerCommand(new KitCommands(this));
-        commandManager.registerCommand(new SetEndLocationCommand(this));
+        commandManager.registerCommands(new ArenaCommands(this));
+        commandManager.registerCommands(new DuelCommands(this));
+        commandManager.registerCommands(new KitCommands(this));
+        commandManager.registerCommands(new SetEndLocationCommand(this));
     }
 }

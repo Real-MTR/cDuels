@@ -1,8 +1,9 @@
 package xyz.atomdev.cduels.commands;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
 import lombok.RequiredArgsConstructor;
+import me.andyreckt.raspberry.annotation.Children;
+import me.andyreckt.raspberry.annotation.Command;
+import me.andyreckt.raspberry.annotation.Param;
 import org.bukkit.entity.Player;
 import xyz.atomdev.cduels.CDuels;
 import xyz.atomdev.cduels.model.arena.Arena;
@@ -16,29 +17,13 @@ import java.util.stream.Collectors;
  */
 
 @RequiredArgsConstructor
-@CommandAlias("arena")
-@CommandPermission("cduels.admin")
-public class ArenaCommands extends BaseCommand {
+@Command(names = {"arena"}, permission = "cduels.admin")
+public class ArenaCommands {
 
     private final CDuels instance;
 
-    @Default
-    @Subcommand("help")
-    public void help(Player player) {
-        CC.sendMessageAsList(player, new String[]{
-                "&8--------------------------------",
-                "&b&lArena Manager Help",
-                "&8--------------------------------",
-                "&7* &e/arena create <name>",
-                "&7* &e/arena delete <name>",
-                "&7* &e/arena setpos1 / setpos2 <name>",
-                "&7* &e/arena list",
-                "&8--------------------------------"
-        });
-    }
-
-    @Subcommand("create")
-    public void create(Player player, @Name("name") String name) {
+    @Children(names = "create")
+    public void create(Player player, @Param(name = "name") String name) {
         Arena oldArena = instance.getArenaHandler().getArenaByName(name);
 
         if(oldArena != null) {
@@ -50,8 +35,8 @@ public class ArenaCommands extends BaseCommand {
         CC.sendMessage(player, "&aCreated arena &e" + name);
     }
 
-    @Subcommand("delete")
-    public void delete(Player player, @Name("name") String name) {
+    @Children(names = "delete")
+    public void delete(Player player, @Param(name = "name") String name) {
         Arena arena = instance.getArenaHandler().getArenaByName(name);
 
         if(arena == null) {
@@ -63,8 +48,8 @@ public class ArenaCommands extends BaseCommand {
         CC.sendMessage(player, "&aDeleted arena &e" + name);
     }
 
-    @Subcommand("setpos1")
-    public void setpos1(Player player, @Name("name") String name) {
+    @Children(names = "setpos1")
+    public void setpos1(Player player, @Param(name = "name") String name) {
         Arena arena = instance.getArenaHandler().getArenaByName(name);
 
         if(arena == null) {
@@ -78,8 +63,8 @@ public class ArenaCommands extends BaseCommand {
         CC.sendMessage(player, "&aSet pos1 arena &e" + name);
     }
 
-    @Subcommand("setpos2")
-    public void setpos2(Player player, @Name("name") String name) {
+    @Children(names = "setpos2")
+    public void setpos2(Player player, @Param(name = "name") String name) {
         Arena arena = instance.getArenaHandler().getArenaByName(name);
 
         if(arena == null) {
@@ -93,7 +78,7 @@ public class ArenaCommands extends BaseCommand {
         CC.sendMessage(player, "&aSet pos2 arena &e" + name);
     }
 
-    @Subcommand("list")
+    @Children(names = "list")
     public void list(Player player) {
         CC.sendMessage(player, "&aArenas: &b" + instance.getArenaHandler().getArenas().values().stream().map(Arena::getName).collect(Collectors.toList()));
     }

@@ -1,8 +1,9 @@
 package xyz.atomdev.cduels.commands;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
 import lombok.RequiredArgsConstructor;
+import me.andyreckt.raspberry.annotation.Children;
+import me.andyreckt.raspberry.annotation.Command;
+import me.andyreckt.raspberry.annotation.Param;
 import org.bukkit.entity.Player;
 import xyz.atomdev.cduels.CDuels;
 import xyz.atomdev.cduels.menu.KitsMenu;
@@ -15,27 +16,14 @@ import xyz.atomdev.cduels.util.CC;
  * @date 7/6/2024
  */
 
-@CommandAlias("duel")
+@Command(names = "duel")
 @RequiredArgsConstructor
-public class DuelCommands extends BaseCommand {
+public class DuelCommands {
 
     private final CDuels instance;
 
-    @Default
-    @Subcommand("help")
-    public void help(Player player) {
-        CC.sendMessageAsList(player, new String[]{
-                "&8--------------------------------",
-                "&b&lDuel Commands",
-                "&8--------------------------------",
-                "&7* &e/duel send <player>",
-                "&7* &e/duel accept <player>",
-                "&8--------------------------------"
-        });
-    }
-
-    @Subcommand("send")
-    public void onDuelCommand(Player sender, @Name("player") Player target) {
+    @Children(names = "send")
+    public void onDuelCommand(Player sender, @Param(name = "player") Player target) {
         DuelRequest request = DuelRequest.getByRequester(sender.getUniqueId());
 
         if(sender.getName().equals(target.getName())) {
@@ -51,8 +39,8 @@ public class DuelCommands extends BaseCommand {
         new KitsMenu(instance, target).openMenu(sender);
     }
 
-    @Subcommand("accept")
-    public void onDuelAcceptCommand(Player sender, @Name("player") Player target) {
+    @Children(names = "accept")
+    public void onDuelAcceptCommand(Player sender, @Param(name = "player") Player target) {
         DuelRequest request = DuelRequest.getByRequester(target.getUniqueId());
 
         if (request == null || request.isExpired()) {

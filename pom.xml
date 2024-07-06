@@ -53,16 +53,9 @@
 
     <repositories>
         <repository>
-            <id>spigotmc-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-        <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>aikar</id>
-            <url>https://repo.aikar.co/content/groups/aikar/</url>
+            <id>mincats-repo-public</id>
+            <name>Mincats Repositories</name>
+            <url>https://repo.mincats.eu/public</url>
         </repository>
     </repositories>
 
@@ -90,9 +83,9 @@
             <version>LATEST</version>
         </dependency>
         <dependency>
-            <groupId>co.aikar</groupId>
-            <artifactId>acf-bukkit</artifactId>
-            <version>LATEST</version>
+            <groupId>me.andyreckt.raspberry</groupId>
+            <artifactId>paper</artifactId>
+            <version>1.1.23-dev-3</version>
         </dependency>
     </dependencies>
 </project>
