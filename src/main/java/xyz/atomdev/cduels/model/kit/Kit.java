@@ -21,11 +21,13 @@ import java.util.List;
 public class Kit {
 
     private final String name;
+    private String permission;
     private ItemStack[] inventoryContents, armorContents;
     private List<PotionEffect> effects;
 
     public Kit(String name) {
         this.name = name;
+        this.permission = "cduels.kit." + name;
         this.inventoryContents = null;
         this.armorContents = null;
         this.effects = new ArrayList<>();

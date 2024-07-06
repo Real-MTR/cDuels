@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
@@ -114,8 +115,8 @@ public class DuelListener implements Listener {
         if (player.getHealth() <= event.getFinalDamage()) {
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> player.spigot().respawn(), 2L);
 
-            // TODO: End duel here!
-            plugin.getDuelHandler().end(duelPlayer.getCurrentDuel());
+            duelPlayer.getCurrentDuel().setWinner(duelPlayer.getCurrentDuel().getOpponent(duelPlayer));
+            plugin.getDuelHandler().end(duelPlayer.getCurrentDuel(), null);
         }
     }
 
@@ -175,6 +176,17 @@ public class DuelListener implements Listener {
 
         Profile duelPlayer = plugin.getProfileHandler().getProfileMap().get(player.getName());
 
-        plugin.getDuelHandler().end(duelPlayer.getCurrentDuel());
+        duelPlayer.getCurrentDuel().setWinner(duelPlayer.getCurrentDuel().getOpponent(duelPlayer));
+        plugin.getDuelHandler().end(duelPlayer.getCurrentDuel(), player);
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event) {
+        Player player = event.getEntity();
+        Profile profile = plugin.getProfileHandler().getProfileMap().get(player.getName());
+
+        if(profile == null || profile.isInDuel() || profile.getCurrentDuel().getState() != DuelState.FIGHTING) return;
+
+        event.getDrops().clear();
     }
 }

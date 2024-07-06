@@ -68,18 +68,22 @@ public class KitsMenu extends Menu {
 
         @Override
         public void onClick(Player player, int slot, ClickType type) {
-            DuelRequest request = new DuelRequest(player, target, kit);
-            player.closeInventory();
+            if(player.hasPermission(kit.getPermission())) {
+                DuelRequest request = new DuelRequest(player, target, kit);
+                player.closeInventory();
 
-            CC.sendMessage(player, "&aYou have sent a duel to &b" + target.getName() + " &awith the kit &e" + kit.getName());
-            CC.sendMessage(target, "&b" + player.getName() + " &asent you a duel with the kit &e" + kit.getName());
-            new MessageBuilder("&2&lAccept")
-                    .translate(true)
-                    .clickable(true)
-                    .clickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "duelaccept " + player.getName()))
-                    .hover(true)
-                    .hoverText("Click to accept")
-                    .sendMessage(target);
+                CC.sendMessage(player, "&aYou have sent a duel to &b" + target.getName() + " &awith the kit &e" + kit.getName());
+                CC.sendMessage(target, "&b" + player.getName() + " &asent you a duel with the kit &e" + kit.getName());
+                new MessageBuilder("&2&lAccept")
+                        .translate(true)
+                        .clickable(true)
+                        .clickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "duelaccept " + player.getName()))
+                        .hover(true)
+                        .hoverText("Click to accept")
+                        .sendMessage(target);
+            } else {
+                CC.sendMessage(player, "&cYou do not have permission to send a duel with this kit!");
+            }
         }
     }
 }

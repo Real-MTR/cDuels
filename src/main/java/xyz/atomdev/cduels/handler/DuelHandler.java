@@ -67,6 +67,8 @@ public class DuelHandler {
 
         preparePlayer(firstPlayer, duel, true);
         preparePlayer(secondPlayer, duel, false);
+        firstPlayer.updateInventory();
+        secondPlayer.updateInventory();
 
         runTimer(duel);
     }
@@ -74,6 +76,7 @@ public class DuelHandler {
     private void saveTemporarilySaves(Profile profile, Duel duel) {
         profile.setInDuel(true);
         profile.setCurrentDuel(duel);
+
         profile.setLastArmor(profile.toBukkitPlayer().getInventory().getArmorContents());
         profile.setLastItems(profile.toBukkitPlayer().getInventory().getContents());
         profile.setLastEffects(profile.toBukkitPlayer().getActivePotionEffects());
@@ -82,38 +85,49 @@ public class DuelHandler {
     private void preparePlayer(Player player, Duel duel, boolean first) {
         player.getInventory().clear();
         player.getInventory().setArmorContents(null);
+
         player.teleport(first ? duel.getArena().getPos1() : duel.getArena().getPos2());
+
         player.getInventory().setContents(duel.getKit().getInventoryContents());
         player.getInventory().setArmorContents(duel.getKit().getArmorContents());
     }
 
-    public void end(Duel duel) {
+    public void end(Duel duel, Player quit) {
         duel.setState(DuelState.ENDING);
 
         instance.getServer().getScheduler().runTaskLater(instance, () -> {
             Profile firstPlayerProfile = duel.getFirstPlayer();
             Profile secondPlayerProfile = duel.getSecondPlayer();
 
-            resetPlayer(firstPlayerProfile);
-            resetPlayer(secondPlayerProfile);
+            if(quit == null) {
+                resetPlayer(firstPlayerProfile);
+                resetPlayer(secondPlayerProfile);
 
-            resetTemporarilySaves(firstPlayerProfile);
-            resetTemporarilySaves(secondPlayerProfile);
+                resetTemporarilySaves(firstPlayerProfile);
+                resetTemporarilySaves(secondPlayerProfile);
+            } else {
+                resetPlayer(duel.getWinner());
+                resetTemporarilySaves(duel.getWinner());
+            }
 
+            instance.getServer().dispatchCommand(instance.getServer().getConsoleSender(), instance.getConfig().getString("winner-reward-command")
+                    .replace("<winner>", duel.getWinner().getName()));
             duel.end();
         }, 60L);
     }
 
-    private void resetPlayer(Profile profile) {
+    public void resetPlayer(Profile profile) {
         profile.toBukkitPlayer().getInventory().setContents(profile.getLastItems());
         profile.toBukkitPlayer().getInventory().setArmorContents(profile.getLastArmor());
+
         profile.getLastEffects().forEach(profile.toBukkitPlayer()::addPotionEffect);
         profile.toBukkitPlayer().teleport(SerializationUtil.deserializeLocation(instance.getConfig().getString("end-location")));
     }
 
-    private void resetTemporarilySaves(Profile profile) {
+    public void resetTemporarilySaves(Profile profile) {
         profile.setInDuel(false);
         profile.setCurrentDuelId(new UUID(0, 0));
+
         profile.setLastArmor(new ItemStack[]{});
         profile.setLastItems(new ItemStack[]{});
         profile.setLastEffects(new ArrayList<>());

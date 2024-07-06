@@ -15,6 +15,7 @@ import xyz.atomdev.cduels.handler.KitHandler;
 import xyz.atomdev.cduels.handler.ProfileHandler;
 import xyz.atomdev.cduels.listeners.DuelListener;
 import xyz.atomdev.cduels.listeners.ProfileListener;
+import xyz.atomdev.cduels.placeholders.PlaceholderAPIExpansion;
 import xyz.atomdev.cduels.util.ConfigFile;
 import xyz.atomdev.cduels.util.menu.MenuAPI;
 
@@ -61,6 +62,10 @@ public final class CDuels extends JavaPlugin {
         this.duelHandler = new DuelHandler(this);
         this.arenaHandler = new ArenaHandler(this);
         this.kitHandler = new KitHandler(this);
+
+        if(getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new PlaceholderAPIExpansion().register();
+        }
     }
 
     private void registerListeners() {

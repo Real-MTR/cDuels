@@ -26,6 +26,7 @@ public class Duel {
     private DuelState state;
     private double wager = 0;
     private int duration;
+    private Profile winner;
 
     public Duel(String player1, String player2, Kit kit) {
         this.uuid = UUID.randomUUID();

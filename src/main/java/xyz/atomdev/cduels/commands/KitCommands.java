@@ -124,6 +124,7 @@ public class KitCommands {
 
         kit.removeEffect(effectType);
         instance.getKitHandler().saveKit(kit);
+
         CC.sendMessage(player, "&aRemoved potion to kit &e" + name);
     }
 
@@ -136,6 +137,20 @@ public class KitCommands {
         }
 
         CC.sendMessage(player, "&b" + name + "'s &aEffects: " + kit.getEffects().stream().map(effect -> effect.getType().getName()));
+    }
+
+    @Children(names = "setpermission")
+    public void setPermission(Player player, @Param(name = "name") String name, @Param(name = "permission") String permission) {
+        Kit kit = instance.getKitHandler().getKit(name);
+        if(kit == null) {
+            CC.sendMessage(player, "&cThis kit does not exist!");
+            return;
+        }
+
+        kit.setPermission(permission);
+        instance.getKitHandler().saveKit(kit);
+
+        CC.sendMessage(player, "&b" + name + "'s &apermission has been set to &b" + permission);
     }
 
     @Children(names = "list")

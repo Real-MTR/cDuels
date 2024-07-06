@@ -87,5 +87,12 @@
             <artifactId>paper</artifactId>
             <version>1.1.23-dev-3</version>
         </dependency>
+        <dependency>
+            <groupId>masdasd</groupId>
+            <artifactId>asdasdsa</artifactId>
+            <version>1.</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/PlaceholderAPI.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>

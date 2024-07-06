@@ -37,4 +37,15 @@ public class ProfileListener implements Listener {
             instance.getProfileHandler().getProfileMap().put(profile.getName(), profile);
         }
     }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        Profile profile = instance.getProfileHandler().getProfileMap().get(player.getName());
+
+        if(profile.isInDuel()) {
+            instance.getDuelHandler().resetPlayer(profile);
+            instance.getDuelHandler().resetTemporarilySaves(profile);
+        }
+    }
 }

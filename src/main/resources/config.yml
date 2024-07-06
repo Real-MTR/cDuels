@@ -4,3 +4,29 @@ database:
   database: "cDuels"
   username: "admin"
   password: "1234"
+
+winner-reward-command: "minecraft:give <winner> diamond 1" # Executed by console
+
+scoreboard:
+  allowed-worlds-names:
+    - "duels"
+  no-duel:
+    title: "&b&lCoralMC &7| &fcDuels"
+    lines:
+      - "&7&m-------------------"
+      - "&cThe duel has ended!"
+      - "&r"
+      - "&e&ocoralmc.it"
+      - "&7&m-------------------"
+  in-duel:
+    title: "&b&lCoralMC &7| &fcDuels"
+    lines:
+      - "&7&m-------------------"
+      - " &fOpponent: &b<opponent>"
+      - " &fDuration: &b<duration>"
+      - "&f"
+      - " &fYour Ping: &b<ping>"
+      - " &fOpponent's Ping: &b<opponent_ping>"
+      - "&r"
+      - "&e&ocoralmc.it"
+      - "&7&m-------------------"
