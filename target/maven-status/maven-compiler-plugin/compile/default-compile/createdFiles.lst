@@ -18,7 +18,6 @@ xyz\atomdev\cduels\model\arena\Arena.class
 xyz\atomdev\cduels\util\menu\button\ButtonListener.class
 xyz\atomdev\cduels\commands\DuelCommands.class
 xyz\atomdev\cduels\util\ItemDataColor.class
-xyz\atomdev\cduels\model\duel\task\DurationTask.class
 xyz\atomdev\cduels\model\duel\state\DuelState.class
 xyz\atomdev\cduels\util\ItemBuilder.class
 xyz\atomdev\cduels\handler\KitHandler.class

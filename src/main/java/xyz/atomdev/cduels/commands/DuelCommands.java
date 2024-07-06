@@ -1,9 +1,7 @@
 package xyz.atomdev.cduels.commands;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.Name;
-import co.aikar.commands.annotation.Optional;
+import co.aikar.commands.annotation.*;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
 import xyz.atomdev.cduels.CDuels;
@@ -17,34 +15,43 @@ import xyz.atomdev.cduels.util.CC;
  * @date 7/6/2024
  */
 
+@CommandAlias("duel")
 @RequiredArgsConstructor
 public class DuelCommands extends BaseCommand {
 
     private final CDuels instance;
 
-    @CommandAlias("duel")
-    public void onDuelCommand(Player sender, @Name("player") Player target) {
-        if (target == null || !target.isOnline()) {
-            CC.sendMessage(sender, "&cThat player was not found!");
-            return;
-        }
+    @Default
+    @Subcommand("help")
+    public void help(Player player) {
+        CC.sendMessageAsList(player, new String[]{
+                "&8--------------------------------",
+                "&b&lDuel Commands",
+                "&8--------------------------------",
+                "&7* &e/duel send <player>",
+                "&7* &e/duel accept <player>",
+                "&8--------------------------------"
+        });
+    }
 
-        if (sender.equals(target)) {
+    @Subcommand("send")
+    public void onDuelCommand(Player sender, @Name("player") Player target) {
+        DuelRequest request = DuelRequest.getByRequester(sender.getUniqueId());
+
+        if(sender.getName().equals(target.getName())) {
             CC.sendMessage(sender, "&cYou cannot duel yourself!");
             return;
         }
 
-        DuelRequest request = DuelRequest.getByRequester(target.getUniqueId());
-
-        if (request != null && !request.isExpired()) {
+        if (request != null && !request.isExpired() && request.getTarget().getName().equals(target.getName())) {
             CC.sendMessage(sender, "&cYou have already sent a duel request to " + target.getName() + ", Please wait until it expires or he accepts!");
             return;
         }
 
-        new KitsMenu(instance, target);
+        new KitsMenu(instance, target).openMenu(sender);
     }
 
-    @CommandAlias("duelaccept")
+    @Subcommand("accept")
     public void onDuelAcceptCommand(Player sender, @Name("player") Player target) {
         DuelRequest request = DuelRequest.getByRequester(target.getUniqueId());
 

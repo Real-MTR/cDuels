@@ -9,7 +9,6 @@ import xyz.atomdev.cduels.model.arena.Arena;
 import xyz.atomdev.cduels.model.duel.Duel;
 import xyz.atomdev.cduels.model.duel.state.DuelState;
 import xyz.atomdev.cduels.model.duel.task.CountdownTask;
-import xyz.atomdev.cduels.model.duel.task.DurationTask;
 import xyz.atomdev.cduels.model.profile.Profile;
 import xyz.atomdev.cduels.util.CC;
 import xyz.atomdev.cduels.util.SerializationUtil;
@@ -29,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DuelHandler {
 
     private final CDuels instance;
-    private final Map<String, Duel> duels = new ConcurrentHashMap<>();
+    private final Map<UUID, Duel> duels = new ConcurrentHashMap<>();
 
     public void start(Duel duel) {
         Player firstPlayer = duel.getFirstPlayer().toBukkitPlayer();
@@ -62,6 +61,7 @@ public class DuelHandler {
             arena.getPos1().getWorld().loadChunk(arena.getPos1().getChunk());
         }
 
+        duels.put(duel.getUuid(), duel);
         saveTemporarilySaves(firstPlayerProfile, duel);
         saveTemporarilySaves(secondPlayerProfile, duel);
 
@@ -122,10 +122,9 @@ public class DuelHandler {
     private void runTimer(Duel duel) {
         new CountdownTask(instance, duel.getFirstPlayer().toBukkitPlayer(), duel.getSecondPlayer().toBukkitPlayer(), 3)
                 .runTaskTimerAsynchronously(instance, 0, 20);
-        new DurationTask(duel).runTaskTimerAsynchronously(instance, 0, 20);
     }
 
     public Duel getDuelById(UUID id) {
-        return duels.values().stream().filter(duel -> duel.getUuid().toString().equals(id.toString())).findFirst().orElse(null);
+        return duels.get(id);
     }
 }

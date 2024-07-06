@@ -33,6 +33,7 @@ public class CountdownTask extends BukkitRunnable {
         } else if (secondsLeft == 0) {
             CC.sendMessage(player1, "&aGO!");
             CC.sendMessage(player2, "&aGO!");
+
             instance.getProfileHandler().getProfileMap().get(player1.getName()).getCurrentDuel().setState(DuelState.FIGHTING);
             this.cancel();
         }

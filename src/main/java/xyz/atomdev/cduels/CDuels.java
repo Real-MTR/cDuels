@@ -15,6 +15,7 @@ import xyz.atomdev.cduels.handler.ProfileHandler;
 import xyz.atomdev.cduels.listeners.DuelListener;
 import xyz.atomdev.cduels.listeners.ProfileListener;
 import xyz.atomdev.cduels.util.ConfigFile;
+import xyz.atomdev.cduels.util.menu.MenuAPI;
 
 @Getter
 public final class CDuels extends JavaPlugin {
@@ -64,6 +65,7 @@ public final class CDuels extends JavaPlugin {
     private void registerListeners() {
         new ProfileListener(this);
         new DuelListener(this);
+        new MenuAPI(this);
     }
 
     private void registerCommands() {

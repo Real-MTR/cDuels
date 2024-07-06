@@ -63,7 +63,6 @@ public class Duel {
     }
 
     public void end() {
-        CDuels.getInstance().getDuelHandler().getDuels().remove(player1);
-        CDuels.getInstance().getDuelHandler().getDuels().remove(player2);
+        CDuels.getInstance().getDuelHandler().getDuels().remove(uuid);
     }
 }
