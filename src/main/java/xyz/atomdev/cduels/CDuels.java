@@ -23,7 +23,7 @@ public final class CDuels extends JavaPlugin {
     @Getter private static CDuels instance;
 
     private ConfigFile arenaFile, kitFile;
-    private SQLDatabase database;
+    private SQLDatabase sqlDatabase;
 
     private ProfileHandler profileHandler;
     private DuelHandler duelHandler;
@@ -55,7 +55,7 @@ public final class CDuels extends JavaPlugin {
     }
 
     private void loadObjects() {
-        this.database = new SQLDatabase(this);
+        this.sqlDatabase = new SQLDatabase(this);
         this.profileHandler = new ProfileHandler(this);
         this.duelHandler = new DuelHandler(this);
         this.arenaHandler = new ArenaHandler(this);

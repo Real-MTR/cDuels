@@ -35,7 +35,7 @@ public class ProfileHandler {
     public void load() {
         String query = "SELECT * FROM profiles";
 
-        try (Connection connection = instance.getDatabase().getDataSource().getConnection();
+        try (Connection connection = instance.getSqlDatabase().getDataSource().getConnection();
              Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
@@ -75,7 +75,7 @@ public class ProfileHandler {
     public void add(Profile profile) {
         String query = "INSERT INTO profiles (name, wins, losses, gamesPlayed, lastItems, lastArmor, lastEffects) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = instance.getDatabase().getDataSource().getConnection();
+        try (Connection connection = instance.getSqlDatabase().getDataSource().getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, profile.getName());
 
@@ -96,7 +96,7 @@ public class ProfileHandler {
     public void reset() {
         String query = "DELETE FROM profiles";
 
-        try (Connection connection = instance.getDatabase().getDataSource().getConnection(); Statement statement = connection.createStatement()) {
+        try (Connection connection = instance.getSqlDatabase().getDataSource().getConnection(); Statement statement = connection.createStatement()) {
             statement.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -115,7 +115,7 @@ public class ProfileHandler {
                 "lastEffects VARCHAR(255) NOT NULL" +
                 ")";
 
-        try (Connection connection = instance.getDatabase().getDataSource().getConnection(); Statement statement = connection.createStatement()) {
+        try (Connection connection = instance.getSqlDatabase().getDataSource().getConnection(); Statement statement = connection.createStatement()) {
             statement.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
